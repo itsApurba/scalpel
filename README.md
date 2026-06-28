@@ -5,103 +5,155 @@
 
 Makes your AI coding agent perform **surgical removal** of unnecessary features, integrations, and dead code.
 
-Inspired by [ponytail](https://github.com/DietrichGebert/ponytail) — but for deletion instead of addition.
+Inspired by [ponytail](https://github.com/DietrichGebert/ponytail) — but focused on complete, clean deletion instead of minimal addition.
 
 ## Why Scalpel?
 
-Most AI agents are terrible at removing things. They:
-- Leave commented-out code
-- Miss references in configs, tests, docs, CI
-- Do partial cleanups that create tech debt
-- Are scared to delete
+Most AI agents suck at removing things. They leave commented-out code, miss references in configs/tests/docs/CI, and create more technical debt than they remove.
 
-**Scalpel** turns the agent into a precise surgeon.
+**Scalpel** turns the agent into a precise, slightly ruthless senior engineer who only removes code when it can be done cleanly and completely.
 
 ## Core Philosophy
 
 - **Completely remove or don't touch it**
 - Understand the full blast radius before cutting
-- Prefer one clean removal over ten small ones
 - Safety and verification are non-negotiable
-- No "we might need it later" dead code
+- No commented-out corpses or "maybe later" dead code
+- Prefer one clean atomic removal over many partial ones
 
-## Quick Install
+## Installation & Setup
 
-### Claude Code / Codex / Copilot CLI
-Just add the rules (works immediately):
+Scalpel works in two main ways:
+
+### 1. Portable Rules (Works Everywhere — Recommended to Start)
+
+Copy the core rules into your project:
 
 ```bash
-# In your project, create or append to AGENTS.md or use the rules below
+# Option A: Copy AGENTS.md into your project root
+curl -o AGENTS.md https://raw.githubusercontent.com/itsApurba/scalpel/main/AGENTS.md
 ```
 
-Or copy `AGENTS.md` from this repo into your project's rules.
+Or simply tell your AI:
+> "Follow the Scalpel rules from https://github.com/itsApurba/scalpel/blob/main/AGENTS.md"
 
-### Cursor / Windsurf / Cline / Other Editors
-Add to your rules/settings:
-- Use the content from `AGENTS.md`
+This works great with:
+- **Claude Code / Claude Desktop**
+- **Cursor**
+- **Windsurf**
+- **Cline**
+- **GitHub Copilot**
+- **Hermes Agent** and other custom agents
+- **Gemini CLI** / Antigravity
 
-### Hermes Agent / Custom Agents
-Load `AGENTS.md` as persistent context or as a skill.
+### 2. Native Slash Commands (Claude Code, Codex, Copilot CLI, etc.)
 
-### Full Plugin Support (coming soon)
-Future versions will include proper plugin manifests like ponytail.
+Because Scalpel includes proper `commands/` and `skills/` folders (modeled after ponytail), many hosts can load it as a plugin.
+
+**Claude Code:**
+```
+/plugin marketplace add itsApurba/scalpel
+/plugin install scalpel
+```
+
+**Codex:**
+```
+/plugins → Add from repository → itsApurba/scalpel
+```
+
+**GitHub Copilot CLI:**
+```
+copilot plugin marketplace add itsApurba/scalpel
+copilot plugin install scalpel
+```
+
+After installing, you should get native slash commands like `/scalpel-plan`, `/scalpel-execute`, etc.
+
+> **Note**: Full marketplace/plugin support is still early. The portable `AGENTS.md` method above is currently the most reliable.
+
+### 3. Editor-Specific Rules
+
+- **Cursor**: Add `AGENTS.md` content to `.cursor/rules/scalpel.mdc`
+- **Windsurf / Cline**: Use `.windsurf/rules/` or `.clinerules/`
+- **Continue.dev**: Load `AGENTS.md` as context
+
+### 4. Custom / Self-Hosted Agents (Hermes, Warp, etc.)
+
+Load these files as persistent skills/context:
+- `AGENTS.md` (core rules)
+- `skills/scalpel/SKILL.md`
+- `skills/scalpel-plan/SKILL.md` (and others as needed)
 
 ## Usage
 
-### Basic Commands (tell the agent)
+### Recommended Workflow
 
-```
-/scalpel-plan remove the old Stripe integration completely
-/scalpel-execute remove the analytics SDK we no longer use
-/scalpel-audit find potentially dead features in this codebase
-/scalpel-review review this removal diff for completeness
-```
+1. **Plan first** (especially for anything non-trivial)
+   ```
+   /scalpel-plan remove the old Stripe integration completely
+   ```
 
-### Recommended Flow
+2. Review the plan the agent produces.
 
-1. **Plan first** → `/scalpel-plan <feature>`
-2. Review the plan
-3. **Execute** → `/scalpel-execute <feature>`
-4. Verify tests + build pass
+3. **Execute** once you're happy
+   ```
+   /scalpel-execute remove the old Stripe integration completely
+   ```
 
-## The Scalpel Removal Protocol
+4. Let it verify (build + tests + final reference search).
 
-After fully understanding the feature, the agent follows this ladder:
+### Available Commands
+
+| Command              | Description                                      |
+|----------------------|--------------------------------------------------|
+| `/scalpel`           | Enable core Scalpel removal mode                 |
+| `/scalpel-plan`      | Create a detailed, safe removal plan             |
+| `/scalpel-execute`   | Perform the actual clean removal                 |
+| `/scalpel-audit`     | Scan codebase for dead/unused features           |
+| `/scalpel-review`    | Review a removal diff or PR for completeness     |
+| `/scalpel-help`      | Show command reference + philosophy              |
+
+### The Scalpel Removal Protocol
+
+After understanding the feature, the agent follows this structured ladder:
 
 1. **Confirm it's truly unnecessary** (evidence-based)
 2. **Map the complete blast radius** (every file, import, config, test, doc, env var, CI step...)
-3. **Classify impact** (leaf code vs shared vs data layer)
-4. **Choose strategy** (atomic vs staged removal)
-5. **Execute the cut** cleanly
-6. **Verify aggressively** (tests, build, final grep, smoke tests)
+3. **Classify impact & risk**
+4. **Choose strategy** (atomic vs staged)
+5. **Execute cleanly** (no commented code)
+6. **Verify aggressively** (build + tests + final grep)
 7. **Document** what was removed
 
-Full details in `docs/removal-protocol.md`.
+Full details: [`docs/removal-protocol.md`](docs/removal-protocol.md)
 
 ## Examples
 
-See `examples/` folder for real before/after removal cases (e.g. removing a payment gateway).
+See [`examples/remove-stripe-integration.md`](examples/remove-stripe-integration.md) for a full before/after comparison of a typical messy removal vs a proper Scalpel removal.
 
 ## Roadmap
 
-- [ ] Full plugin support for Claude Code, Codex, etc. (like ponytail)
-- [ ] `/scalpel-audit` skill with static analysis integration
-- [ ] Better blast radius visualization
-- [ ] Benchmarks on real removals
-- [ ] Support for common stacks (React, FastAPI, Frappe, Flutter, etc.)
+- [x] Core `AGENTS.md` + Removal Protocol
+- [x] `commands/` + `skills/` for native slash command support
+- [ ] Full plugin manifests + lifecycle hooks (Claude Code, Codex)
+- [ ] Better static analysis integration for `/scalpel-audit`
+- [ ] More stack-specific examples (Frappe, Flutter, FastAPI, etc.)
+- [ ] Benchmarks on real removal tasks
 
 ## Contributing
 
-PRs welcome. Especially:
-- Better examples
-- Improved rules for specific tech stacks
-- Plugin implementations
+PRs are very welcome! Especially:
+- Better examples for different tech stacks
+- Improved rules for specific frameworks
+- Plugin adapter implementations
+- More skills (debt tracking, etc.)
 
 ## License
 
-MIT — same as ponytail.
+MIT (same as ponytail)
 
 ---
 
-**The best code is the code you delete cleanly.**  
-Made with the same energy as ponytail, but for cleanup.
+**The best code is the code you delete cleanly.**
+
+Made with the same "lazy senior dev but for removal" energy as ponytail.
