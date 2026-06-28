@@ -1,0 +1,1 @@
+cat /home/workdir/artifacts/scalpel/docs/removal-protocol.md

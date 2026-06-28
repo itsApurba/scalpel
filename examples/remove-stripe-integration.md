@@ -1,0 +1,1 @@
+cat /home/workdir/artifacts/scalpel/examples/remove-stripe-integration.md

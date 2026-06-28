@@ -1,0 +1,1 @@
+cat /home/workdir/artifacts/scalpel/AGENTS.md
