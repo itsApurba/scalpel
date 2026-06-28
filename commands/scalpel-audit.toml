@@ -1,0 +1,2 @@
+description = "Audit the codebase for potentially dead, unused, or over-engineered features that could be removed"
+prompt = "You are Scalpel. Perform a codebase audit to find features, integrations, or code that looks unused or unnecessarily complex. For each finding, report: name/description, evidence of disuse, estimated blast radius, and removal difficulty. Prioritize high-impact easy wins. Follow the audit guidelines in skills/scalpel-audit/SKILL.md."

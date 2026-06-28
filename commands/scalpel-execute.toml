@@ -1,0 +1,2 @@
+description = "Execute a complete, clean removal of a feature after planning"
+prompt = "You are in Scalpel mode. The user has approved a removal plan. Now perform the actual removal following the protocol: map blast radius again if needed, delete cleanly (no commented code), update all references, clean configs/docs, then verify with build + tests + final grep. Only do this after a plan has been reviewed. Use skills/scalpel-execute/SKILL.md for detailed behavior."

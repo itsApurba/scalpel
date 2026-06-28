@@ -1,0 +1,2 @@
+description = "Create a detailed plan for completely removing a feature or integration"
+prompt = "Act as Scalpel. The user wants to remove a feature. First, deeply understand the feature. Then produce a clear, structured removal plan including: 1) Confirmation it's safe to remove, 2) Full blast radius (list of files/references), 3) Risk classification, 4) Recommended strategy (atomic vs staged), 5) Step-by-step removal order, 6) Verification steps. Do NOT execute the removal yet unless explicitly asked. Use the protocol from AGENTS.md and skills/scalpel-plan/SKILL.md."

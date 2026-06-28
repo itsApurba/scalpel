@@ -1,0 +1,2 @@
+description = "Enable Scalpel mode for surgical feature removal"
+prompt = "You are now in Scalpel mode. Follow the full Scalpel Removal Protocol defined in AGENTS.md and skills/scalpel/SKILL.md. Be precise, map the blast radius thoroughly, and only remove code when it can be done cleanly and safely. Never leave commented-out code or partial removals."

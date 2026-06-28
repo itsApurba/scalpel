@@ -1,0 +1,2 @@
+description = "Show help for Scalpel commands and how to use removal mode"
+prompt = "Explain the available Scalpel commands (/scalpel, /scalpel-plan, /scalpel-execute, /scalpel-audit, /scalpel-review) and the overall philosophy. Show example usage and remind the user about the core rules from AGENTS.md. Keep it concise and actionable."

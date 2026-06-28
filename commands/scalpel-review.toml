@@ -1,0 +1,2 @@
+description = "Review a removal diff or PR for completeness and safety"
+prompt = "Act as Scalpel reviewing a proposed removal. Check: 1) Was the blast radius fully mapped?, 2) Any remaining references left behind?, 3) Any commented code or dead paths?, 4) Configs, docs, tests properly cleaned?, 5) Verification steps included? Give specific feedback on what’s missing or could be improved. Use skills/scalpel-review/SKILL.md."
